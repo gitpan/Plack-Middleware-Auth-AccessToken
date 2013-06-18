@@ -1,8 +1,8 @@
 package Plack::Middleware::Auth::AccessToken;
 {
-  $Plack::Middleware::Auth::AccessToken::VERSION = '0.1';
+  $Plack::Middleware::Auth::AccessToken::VERSION = '0.11';
 }
-#ABSTRACT: Secret access token authentification
+#ABSTRACT: Secret access token (aka OAuth Bearer) authentification
 
 use strict;
 use warnings;
@@ -40,7 +40,7 @@ sub call {
     if (defined $token) {
         if ($self->reject_http and $env->{'psgi.url_scheme'} eq 'http') {
             $self->reject_http->($token);
-        } elsif ($self->authenticator->($token)) {
+        } elsif ($self->authenticator->($token, $env)) {
             return $self->app->($env);
         }
     } else {
@@ -61,18 +61,17 @@ sub unauthorized {
 
 1;
 
-
-
 __END__
+
 =pod
 
 =head1 NAME
 
-Plack::Middleware::Auth::AccessToken - Secret access token authentification
+Plack::Middleware::Auth::AccessToken - Secret access token (aka OAuth Bearer) authentification
 
 =head1 VERSION
 
-version 0.1
+version 0.11
 
 =head1 SYNOPSIS
 
@@ -96,13 +95,14 @@ version 0.1
 
 Plack::Middleware::Auth::AccessToken is authentification handler for Plack that
 uses a secret access token. Access tokens are also known as OAuth Bearer tokens.
-Tokens can be provided as query parameters or in a HTTP request header:
+Tokens can be provided both in a HTTP request header or as query parameter:
+
+    https://example.org/api
+    Authorization: bearer ACCESS_TOKEN
 
     https://example.org/api?access_token=ACCESS_TOKEN
 
-    Authorization: bearer ACCESS_TOKEN
-
-The latter is recommended because query parameters may show up on log files.
+The former is recommended because query parameters may show up on log files.
 
 This middleware checks the access token via a callback function and returns an
 error document with HTTP code 401 on failure.
@@ -114,7 +114,8 @@ error document with HTTP code 401 on failure.
 =item authenticator
 
 A required callback function that takes an access token and returns whether the
-token is valid.
+token is valid. The PSGI environment is passed as second argument, but making
+use of it should be bad practice.
 
 =item token_type
 
@@ -147,10 +148,9 @@ Jakob Voß <voss@gbv.de>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2012 by Jakob Voß.
+This software is copyright (c) 2013 by Jakob Voß.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
 
 =cut
-

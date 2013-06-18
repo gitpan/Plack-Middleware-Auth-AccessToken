@@ -1,11 +1,11 @@
 
 
 This archive contains the distribution Plack-Middleware-Auth-AccessToken,
-version 0.1:
+version 0.11:
 
-  Secret access token authentification
+  Secret access token (aka OAuth Bearer) authentification
 
-This software is copyright (c) 2012 by Jakob Voß.
+This software is copyright (c) 2013 by Jakob Voß.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.

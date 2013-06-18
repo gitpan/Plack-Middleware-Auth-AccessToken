@@ -1,5 +1,5 @@
 ---
-abstract: 'Secret access token authentification'
+abstract: 'Secret access token (aka OAuth Bearer) authentification'
 author:
   - 'Jakob Voß <voss@gbv.de>'
 build_requires:
@@ -10,7 +10,7 @@ build_requires:
 configure_requires:
   ExtUtils::MakeMaker: 6.30
 dynamic_config: 0
-generated_by: 'Dist::Zilla version 4.300023, CPAN::Meta::Converter version 2.120921'
+generated_by: 'Dist::Zilla version 4.300034, CPAN::Meta::Converter version 2.131560'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -24,8 +24,4 @@ requires:
   parent: 0
   strict: 0
   warnings: 0
-resources:
-  bugtracker: https://github.com/nichtich/Plack-Middleware-Auth-AccessToken/issues
-  homepage: https://github.com/nichtich/Plack-Middleware-Auth-AccessToken
-  repository: https://github.com/nichtich/Plack-Middleware-Auth-AccessToken.git
-version: 0.1
+version: 0.11
